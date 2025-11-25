@@ -1,0 +1,251 @@
+/* Color Override CSS - Palet Warna Baru */
+/* #EFECE3 - Light Cream */
+/* #8FABD4 - Light Blue */
+/* #4A70A9 - Dark Blue */
+/* #000000 - Black */
+
+:root {
+    --color-light: #EFECE3;
+    --color-medium: #8FABD4;
+    --color-dark: #4A70A9;
+    --color-black: #000000;
+}
+
+/* Global Overrides */
+body {
+    background-color: var(--color-light) !important;
+    color: var(--color-black) !important;
+}
+
+/* Button Overrides */
+.btn-primary, .main-blue-button a, .main-red-button a {
+    background-color: var(--color-dark) !important;
+    border-color: var(--color-dark) !important;
+    color: var(--color-light) !important;
+}
+
+.btn-primary:hover, .main-blue-button a:hover, .main-red-button a:hover {
+    background-color: var(--color-black) !important;
+    border-color: var(--color-black) !important;
+    color: var(--color-light) !important;
+}
+
+.btn-secondary, .btn-outline-secondary {
+    background-color: var(--color-medium) !important;
+    border-color: var(--color-medium) !important;
+    color: var(--color-black) !important;
+}
+
+.btn-secondary:hover, .btn-outline-secondary:hover {
+    background-color: var(--color-dark) !important;
+    border-color: var(--color-dark) !important;
+    color: var(--color-light) !important;
+}
+
+/* Navigation Overrides */
+.header-area .main-nav .nav li a {
+    color: var(--color-black) !important;
+}
+
+.header-area .main-nav .nav li:hover a,
+.header-area .main-nav .nav li a.active {
+    color: var(--color-dark) !important;
+}
+
+/* Card Overrides */
+.card {
+    background-color: var(--color-light) !important;
+    border: 1px solid var(--color-medium) !important;
+}
+
+.jurusan-card {
+    background-color: var(--color-light) !important;
+    border: 1px solid var(--color-medium) !important;
+}
+
+.jurusan-card:hover {
+    background-color: var(--color-medium) !important;
+    color: var(--color-black) !important;
+}
+
+/* Text Color Overrides */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--color-black) !important;
+}
+
+.text-muted {
+    color: var(--color-dark) !important;
+}
+
+/* Badge Overrides */
+.badge.bg-success {
+    background-color: var(--color-dark) !important;
+}
+
+.badge.bg-warning {
+    background-color: var(--color-medium) !important;
+    color: var(--color-black) !important;
+}
+
+.badge.bg-danger {
+    background-color: var(--color-black) !important;
+}
+
+/* Form Overrides */
+.form-control {
+    background-color: var(--color-light) !important;
+    border: 1px solid var(--color-medium) !important;
+    color: var(--color-black) !important;
+}
+
+.form-control:focus {
+    border-color: var(--color-dark) !important;
+    box-shadow: 0 0 0 0.2rem rgba(74, 112, 169, 0.25) !important;
+}
+
+/* Table Overrides */
+.table-striped > tbody > tr:nth-of-type(odd) > td {
+    background-color: rgba(143, 171, 212, 0.1) !important;
+}
+
+/* Alert Overrides */
+.alert-success {
+    background-color: var(--color-dark) !important;
+    border-color: var(--color-dark) !important;
+    color: var(--color-light) !important;
+}
+
+.alert-warning {
+    background-color: var(--color-medium) !important;
+    border-color: var(--color-medium) !important;
+    color: var(--color-black) !important;
+}
+
+.alert-danger {
+    background-color: var(--color-black) !important;
+    border-color: var(--color-black) !important;
+    color: var(--color-light) !important;
+}
+
+/* Link Overrides */
+a {
+    color: var(--color-dark) !important;
+}
+
+a:hover {
+    color: var(--color-black) !important;
+}
+
+/* Background Overrides */
+.bg-light {
+    background-color: var(--color-light) !important;
+}
+
+.bg-primary {
+    background-color: var(--color-dark) !important;
+}
+
+.bg-secondary {
+    background-color: var(--color-medium) !important;
+}
+
+/* Footer Override */
+footer {
+    background-color: var(--color-light) !important;
+    border-top: 1px solid var(--color-medium) !important;
+    color: var(--color-black) !important;
+}
+
+/* Preloader Override */
+.preloader-inner .dot,
+.preloader-inner .dots span {
+    background: var(--color-dark) !important;
+}
+
+/* Gradient Overrides */
+.main-banner {
+    background: linear-gradient(135deg, var(--color-medium) 0%, var(--color-dark) 100%) !important;
+}
+
+/* Contact Section Override */
+#contact {
+    background: linear-gradient(135deg, var(--color-dark) 0%, var(--color-black) 100%) !important;
+}
+
+/* Portfolio Item Overrides */
+.our-portfolio .hidden-content {
+    background: linear-gradient(135deg, var(--color-dark) 0%, var(--color-black) 100%) !important;
+}
+
+.our-portfolio .hidden-content:after {
+    background: linear-gradient(135deg, var(--color-dark) 0%, var(--color-black) 100%) !important;
+}
+
+/* Progress Bar Overrides */
+.our-services .progress-skill-bar .filled-bar {
+    background: linear-gradient(135deg, var(--color-medium) 0%, var(--color-dark) 100%) !important;
+}
+
+.our-services .progress-skill-bar span {
+    color: var(--color-dark) !important;
+}
+
+/* About Section Service Items */
+.about-us .services .item {
+    background: linear-gradient(135deg, var(--color-dark) 0%, var(--color-black) 100%) !important;
+}
+
+/* Blog Section Overrides */
+.our-blog .left-image ul li i,
+.our-blog .right-list .left-content span i {
+    color: var(--color-dark) !important;
+}
+
+/* Contact Form Overrides */
+form#contact input,
+form#contact textarea {
+    background-color: rgba(143, 171, 212, 0.2) !important;
+    color: var(--color-black) !important;
+}
+
+form#contact input::placeholder,
+form#contact textarea::placeholder {
+    color: var(--color-dark) !important;
+}
+
+form#contact button {
+    background-color: var(--color-dark) !important;
+}
+
+form#contact button:hover {
+    background-color: var(--color-black) !important;
+}
+
+/* Phone Info Override */
+.phone-info h4 span i {
+    background-color: var(--color-light) !important;
+    color: var(--color-dark) !important;
+}
+
+/* Main Banner Form Override */
+.main-banner .left-content form input {
+    background-color: var(--color-dark) !important;
+}
+
+.main-banner .left-content form button {
+    background-color: var(--color-light) !important;
+    color: var(--color-dark) !important;
+}
+
+/* Responsive Mobile Menu Override */
+@media (max-width: 767px) {
+    .header-area .main-nav .nav li a {
+        background: var(--color-light) !important;
+        color: var(--color-black) !important;
+    }
+    
+    .header-area .main-nav .nav li a:hover {
+        background: var(--color-medium) !important;
+        color: var(--color-black) !important;
+    }
+}

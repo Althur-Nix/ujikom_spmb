@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Generate Placeholder Images</title>
+    </head>
+    <body>
+        <canvas id="canvas" width="400" height="300"></canvas>
+        <script>
+            const canvas = document.getElementById("canvas");
+            const ctx = canvas.getContext("2d");
+
+            const jurusan = [
+                { code: "pplg", name: "PPLG", color: "#213448", icon: "💻" },
+                {
+                    code: "akt",
+                    name: "Akuntansi",
+                    color: "#547792",
+                    icon: "💰",
+                },
+                { code: "anm", name: "Animasi", color: "#94B4C1", icon: "🎬" },
+                { code: "dkv", name: "DKV", color: "#ECEFCA", icon: "🎨" },
+                {
+                    code: "pem",
+                    name: "Pemasaran",
+                    color: "#213448",
+                    icon: "📈",
+                },
+            ];
+
+            jurusan.forEach((j, index) => {
+                // Clear canvas
+                ctx.clearRect(0, 0, 400, 300);
+
+                // Background gradient
+                const gradient = ctx.createLinearGradient(0, 0, 400, 300);
+                gradient.addColorStop(0, j.color);
+                gradient.addColorStop(1, j.color + "80");
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, 400, 300);
+
+                // Icon
+                ctx.font = "80px Arial";
+                ctx.textAlign = "center";
+                ctx.fillStyle = "white";
+                ctx.fillText(j.icon, 200, 120);
+
+                // Text
+                ctx.font = "bold 32px Arial";
+                ctx.fillText(j.name, 200, 180);
+
+                // Subtitle
+                ctx.font = "18px Arial";
+                ctx.fillText("SMK BAKTI NUSANTARA 666", 200, 220);
+
+                // Download
+                setTimeout(() => {
+                    const link = document.createElement("a");
+                    link.download = j.code + ".jpg";
+                    link.href = canvas.toDataURL("image/jpeg", 0.9);
+                    link.click();
+                }, index * 500);
+            });
+        </script>
+    </body>
+</html>
