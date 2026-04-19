@@ -117,6 +117,11 @@ class BerkasController extends Controller
             
             // LOG SETELAH UPDATE untuk konfirmasi
             \Log::info('BERKAS BERHASIL DIKIRIM: ' . $uploadedCount . ' berkas untuk pendaftar ' . $pendaftar->no_pendaftaran);
+            
+            // Ubah status Pendaftar agar muncul di dashboard Panitia
+            if (!in_array($pendaftar->status, ['ADM_PASS', 'ADM_REJECT'])) {
+                $pendaftar->update(['status' => 'SUBMIT']);
+            }
         }
         
         if ($uploadedCount > 0) {
