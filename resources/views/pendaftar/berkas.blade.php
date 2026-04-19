@@ -43,7 +43,7 @@
             <h6><i class="fas fa-info-circle me-2"></i>Persyaratan Berkas:</h6>
             <ul class="mb-0">
                 <li>Format file: PDF atau JPG/PNG</li>
-                <li>Ukuran maksimal: 2MB per file</li>
+                <li>Ukuran maksimal: 5MB per file</li>
                 <li>Pastikan file dapat dibaca dengan jelas</li>
             </ul>
         </div>
@@ -351,7 +351,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Jenis Berkas: <span id="jenisLabel"></span></label>
                                 <input type="file" id="fileInput" name="file" class="form-control" accept=".pdf,.jpg,.jpeg,.png" required>
-                                <small class="text-muted">Format: PDF, JPG, PNG (Max 2MB)</small>
+                                <small class="text-muted">Format: PDF, JPG, PNG (Max 5MB)</small>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -433,11 +433,11 @@ $(document).ready(function() {
         
         if (!file) return;
         
-        if (file.size > 2 * 1024 * 1024) {
+        if (file.size > 5 * 1024 * 1024) {
             Swal.fire({
                 icon: 'error',
                 title: 'File Terlalu Besar',
-                text: 'Ukuran file maksimal 2MB',
+                text: 'Ukuran file maksimal 5MB',
                 confirmButtonColor: '#28a745'
             });
             input.val('');
