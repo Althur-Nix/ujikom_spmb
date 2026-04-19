@@ -146,8 +146,8 @@
                 @endif
             </div>
             <div class="col-md-6">
-                <button class="btn btn-danger btn-lg w-100" onclick="updateStatus('ADM_REJECT')">
-                    <i class="fas fa-times me-2"></i>Tolak Berkas
+                <button class="btn btn-outline-danger btn-lg w-100" onclick="updateStatus('ADM_REJECT')" title="Tolak aplikasi orang ini sepenuhnya">
+                    <i class="fas fa-user-times me-2"></i>Gugurkan Pendaftar
                 </button>
             </div>
         </div>
@@ -214,6 +214,7 @@
     function previewBerkas(url, filename) {
         $('#previewTitle').text('Preview: ' + filename);
         $('#downloadLink').attr('href', url);
+        $('#downloadLink').attr('download', filename);
         
         const fileExt = filename.split('.').pop().toLowerCase();
         let content = '';
@@ -231,18 +232,19 @@
     }
 
     function updateStatus(status) {
-        const aksi = status === 'ADM_PASS' ? 'menerima' : 'menolak';
+        const aksi = status === 'ADM_PASS' ? 'menerima Pendaftar' : 'MENGGUGURKAN pendaftar ini SEPENUHNYA';
         const icon = status === 'ADM_PASS' ? 'question' : 'warning';
         const color = status === 'ADM_PASS' ? '#27ae60' : '#e74c3c';
+        const titleAksi = status === 'ADM_PASS' ? 'Terima' : 'Gugurkan';
         
         Swal.fire({
-            title: `${aksi.charAt(0).toUpperCase() + aksi.slice(1)} Berkas?`,
-            text: `Apakah Anda yakin ingin ${aksi} berkas pendaftar ini?`,
+            title: `${titleAksi} Pendaftar?`,
+            html: `Apakah Anda yakin ingin ${aksi}?<br><br><small class="text-danger">${status === 'ADM_REJECT' ? 'Pendaftar tidak akan bisa memperbaiki berkas lagi jika digugurkan.' : ''}</small>`,
             icon: icon,
             showCancelButton: true,
             confirmButtonColor: color,
             cancelButtonColor: '#6c757d',
-            confirmButtonText: `Ya, ${aksi.charAt(0).toUpperCase() + aksi.slice(1)}!`,
+            confirmButtonText: `Ya, ${titleAksi}!`,
             cancelButtonText: 'Batal'
         }).then((result) => {
             if (result.isConfirmed) {

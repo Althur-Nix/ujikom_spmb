@@ -537,6 +537,7 @@ $(document).ready(function() {
 function previewBerkas(url, filename) {
     $('#previewTitle').text('Preview: ' + filename);
     $('#downloadLink').attr('href', url);
+    $('#downloadLink').attr('download', filename);
     
     const fileExt = filename.split('.').pop().toLowerCase();
     let content = '';
