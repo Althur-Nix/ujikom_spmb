@@ -128,7 +128,7 @@ class BerkasController extends Controller
     public function autoSave(Request $request)
     {
         $request->validate([
-            'file' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'file' => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120',
             'type' => 'required|string|in:ijazah,rapor,akta,kk,kip,kks'
         ]);
         
@@ -252,7 +252,7 @@ class BerkasController extends Controller
     {
         try {
             $request->validate([
-                'file' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
+                'file' => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120',
                 'berkas_id' => 'required|exists:pendaftar_berkas,id'
             ]);
             
@@ -305,7 +305,7 @@ class BerkasController extends Controller
             
         } catch (\Illuminate\Validation\ValidationException $e) {
             \Log::error('Validation error upload ulang: ' . json_encode($e->errors()));
-            return response()->json(['message' => 'File tidak valid: ' . implode(', ', array_flatten($e->errors()))], 422);
+            return response()->json(['message' => 'File tidak valid: ' . implode(', ', \Illuminate\Support\Arr::flatten($e->errors()))], 422);
         } catch (\Exception $e) {
             \Log::error('Error upload ulang: ' . $e->getMessage());
             return response()->json(['message' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);

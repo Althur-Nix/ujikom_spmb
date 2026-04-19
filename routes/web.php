@@ -209,10 +209,15 @@ Route::put('/admin/pendaftar/{id}/update-status', function (\Illuminate\Http\Req
 Route::get('/admin/verifikasi', function (\Illuminate\Http\Request $request) {
     $user = $request->session()->get('user');
     $mockUser = (object) $user;
-    $verifikasi = collect([
-        (object) ['id' => 1, 'nama' => 'John Doe', 'berkas' => 'Ijazah', 'status' => 'pending'],
-        (object) ['id' => 2, 'nama' => 'Jane Smith', 'berkas' => 'Transkrip', 'status' => 'verified']
-    ]);
+    $verifikasi = \App\Models\Pendaftar::with(['user', 'dataSiswa', 'berkas' => function($query) {
+            $query->where('is_draft', false)->orderBy('created_at', 'desc');
+        }])
+        ->whereHas('berkas', function($query) {
+            $query->where('is_draft', false);
+        })
+        ->whereIn('status', ['SUBMIT', 'REVISION_REQUIRED', 'ADM_PASS', 'ADM_REJECT'])
+        ->orderBy('created_at', 'desc')
+        ->paginate(15);
     return view('admin.verifikasi.index', compact('verifikasi', 'mockUser'));
 })->middleware(App\Http\Middleware\CheckSession::class . ':admin')->name('admin.verifikasi');
 
@@ -402,7 +407,7 @@ Route::get('/keuangan/pembayaran/{id}', function (\Illuminate\Http\Request $requ
 
 Route::post('/keuangan/verifikasi/{id}', function (\Illuminate\Http\Request $request, $id) {
     $request->validate([
-        'status' => 'required|in:PAID,ADM_PASS',
+        'status' => 'required|in:PAID,REJECTED_PAYMENT',
         'catatan' => 'nullable|string'
     ]);
     
@@ -433,7 +438,7 @@ Route::post('/keuangan/verifikasi/{id}', function (\Illuminate\Http\Request $req
             }
         }
     } else {
-        // Jika pembayaran ditolak, kembali ke ADM_PASS
+        // Jika pembayaran ditolak (REJECTED_PAYMENT), kembali ke ADM_PASS otomatis
         $pendaftar->update(['status' => 'ADM_PASS']);
         try {
             $pendaftar->user->notify(new \App\Notifications\PembayaranVerifiedNotification($pendaftar, 'REJECTED'));
@@ -585,7 +590,7 @@ Route::post('/pendaftar/form/store', function (\Illuminate\Http\Request $request
     if (!$pendaftar->no_pendaftaran) {
         $tahun = date('Y');
         $urutan = str_pad($pendaftar->id, 5, '0', STR_PAD_LEFT);
-        $pendaftar->update(['no_pendaftaran' => $tahun . $urutan]);
+        $pendaftar->update(['no_pendaftaran' => 'SPMB-' . $tahun . '-' . $urutan]);
     }
     
     // Buat atau update data siswa
@@ -701,7 +706,7 @@ Route::post('/pendaftar/pembayaran/store', function (\Illuminate\Http\Request $r
         'nominal' => 'required|numeric',
         'tanggal_transfer' => 'required|date',
         'nama_pengirim' => 'required|string|max:255',
-        'bukti_transfer' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048'
+        'bukti_transfer' => 'required|file|mimes:jpg,jpeg,png,pdf|max:5120'
     ]);
     
     $user = $request->session()->get('user');
