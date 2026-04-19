@@ -258,7 +258,7 @@
                             </thead>
                             <tbody>
                                 @forelse($uploadedBerkas as $berkas)
-                                <tr class="{{ !$berkas->valid && $berkas->catatan ? 'table-warning' : '' }}">
+                                <tr class="{{ $berkas->valid === false ? 'table-warning' : '' }}">
                                     <td>
                                         <strong>{{ strtoupper($berkas->jenis) }}</strong><br>
                                         <small class="text-muted">{{ $berkas->nama_file }}</small>
@@ -269,7 +269,7 @@
                                     <td>
                                         @if($berkas->valid === true)
                                             <span class="badge bg-success">Terverifikasi</span>
-                                        @elseif($berkas->valid === false && $berkas->catatan)
+                                        @elseif($berkas->valid === false)
                                             <span class="badge bg-danger">Ditolak</span>
                                         @else
                                             <span class="badge bg-warning text-dark">Menunggu</span>
@@ -279,7 +279,7 @@
                                         <button type="button" class="btn btn-sm btn-outline-primary me-1" onclick="previewBerkas('{{ asset('storage/' . $berkas->url) }}', '{{ $berkas->nama_file }}')">
                                             <i class="fas fa-eye"></i>
                                         </button>
-                                        @if($berkas->valid === false && $berkas->catatan)
+                                        @if($berkas->valid === false)
                                             <button type="button" class="btn btn-sm btn-warning" onclick="confirmUploadUlang('{{ $berkas->jenis }}', {{ $berkas->id }})" title="Upload Ulang">
                                                 <i class="fas fa-upload"></i>
                                             </button>

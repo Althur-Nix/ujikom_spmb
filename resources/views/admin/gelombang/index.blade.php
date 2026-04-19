@@ -66,7 +66,7 @@
                         </td>
                         <td>
                             <button class="btn btn-sm btn-outline-primary me-1" 
-                                    onclick="editGelombang({{ $g->id }}, '{{ $g->nama }}', {{ $g->tahun }}, '{{ $g->tgl_mulai }}', '{{ $g->tgl_selesai }}', {{ $g->biaya_daftar ?? 0 }})">
+                                    onclick="editGelombang({{ $g->id }}, '{{ $g->nama }}', {{ $g->tahun }}, '{{ $g->tgl_mulai ? \Carbon\Carbon::parse($g->tgl_mulai)->format('Y-m-d') : '' }}', '{{ $g->tgl_selesai ? \Carbon\Carbon::parse($g->tgl_selesai)->format('Y-m-d') : '' }}', {{ $g->biaya_daftar ? (int)$g->biaya_daftar : 0 }})">
                                 <i class="fas fa-edit"></i>
                             </button>
                             <form method="POST" action="{{ route('gelombang.destroy', $g->id) }}" class="d-inline">
@@ -124,7 +124,11 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Biaya Pendaftaran</label>
-                        <input type="number" name="biaya_daftar" class="form-control" placeholder="150000" required>
+                        <div class="input-group">
+                            <span class="input-group-text">Rp</span>
+                            <input type="text" class="form-control rupiah-input" placeholder="150.000" required>
+                            <input type="hidden" name="biaya_daftar" class="raw-rupiah">
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -168,7 +172,11 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Biaya Pendaftaran</label>
-                        <input type="number" name="biaya_daftar" id="edit_biaya_daftar" class="form-control" required>
+                        <div class="input-group">
+                            <span class="input-group-text">Rp</span>
+                            <input type="text" id="edit_biaya_daftar_rupiah" class="form-control rupiah-input" required>
+                            <input type="hidden" name="biaya_daftar" id="edit_biaya_daftar" class="raw-rupiah">
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -188,11 +196,45 @@ function editGelombang(id, nama, tahun, tgl_mulai, tgl_selesai, biaya_daftar) {
     document.getElementById('edit_tahun').value = tahun;
     document.getElementById('edit_tgl_mulai').value = tgl_mulai;
     document.getElementById('edit_tgl_selesai').value = tgl_selesai;
+    
     document.getElementById('edit_biaya_daftar').value = biaya_daftar;
+    document.getElementById('edit_biaya_daftar_rupiah').value = formatRupiah(biaya_daftar.toString());
+    
     document.getElementById('editGelombangForm').action = '/admin/gelombang/' + id;
     
     var modal = new bootstrap.Modal(document.getElementById('editGelombangModal'));
     modal.show();
 }
+
+function formatRupiah(angka) {
+    var number_string = angka.replace(/[^,\d]/g, '').toString(),
+        split = number_string.split(','),
+        sisa = split[0].length % 3,
+        rupiah = split[0].substr(0, sisa),
+        ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+        
+    if(ribuan) {
+        separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.');
+    }
+    
+    rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+    return rupiah;
+}
+
+document.querySelectorAll('.rupiah-input').forEach(function(input) {
+    input.addEventListener('keyup', function(e) {
+        this.value = formatRupiah(this.value);
+        let rawInput = this.closest('div').querySelector('.raw-rupiah');
+        rawInput.value = this.value.replace(/\./g, '');
+    });
+    
+    // trigger on load just in case
+    input.addEventListener('change', function(e) {
+        let rawInput = this.closest('div').querySelector('.raw-rupiah');
+        rawInput.value = this.value.replace(/\./g, '');
+    });
+});
+
 </script>
 @endpush

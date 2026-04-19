@@ -87,9 +87,9 @@
                                 @endif
                             </td>
                             <td>
-                                @if($berkas->valid)
+                                @if($berkas->valid === true)
                                     <span class="badge bg-success">Terverifikasi</span>
-                                @elseif($berkas->catatan)
+                                @elseif($berkas->valid === false)
                                     <span class="badge bg-danger">Ditolak</span>
                                 @else
                                     <span class="badge bg-warning text-dark">Menunggu Verifikasi</span>
@@ -99,7 +99,7 @@
                                 <button type="button" class="btn btn-sm btn-primary me-1" onclick="previewBerkas('{{ asset('storage/' . $berkas->url) }}', '{{ $berkas->nama_file }}')">
                                     <i class="fas fa-eye me-1"></i>Lihat
                                 </button>
-                                @if(!$berkas->valid)
+                                @if(is_null($berkas->valid))
                                     <button class="btn btn-sm btn-success me-1" onclick="verifikasiBerkas({{ $berkas->id }}, 'valid')">
                                         <i class="fas fa-check"></i>
                                     </button>

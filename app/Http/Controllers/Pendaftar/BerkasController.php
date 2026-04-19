@@ -271,7 +271,6 @@ class BerkasController extends Controller
             $berkas = PendaftarBerkas::where('id', $request->berkas_id)
                 ->where('pendaftar_id', $pendaftar->id)
                 ->where('valid', false)
-                ->whereNotNull('catatan')
                 ->first();
                 
             if (!$berkas) {
@@ -294,8 +293,8 @@ class BerkasController extends Controller
                 'nama_file' => $file->getClientOriginalName(),
                 'url' => $path,
                 'ukuran_kb' => round($file->getSize() / 1024),
-                'valid' => false,
-                'catatan' => '',
+                'valid' => null,
+                'catatan' => null,
                 'uploaded_at' => now()
             ]);
             
