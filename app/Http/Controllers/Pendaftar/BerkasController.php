@@ -98,7 +98,9 @@ class BerkasController extends Controller
                 ->where('is_draft', true)
                 ->update([
                     'is_draft' => false,
-                    'uploaded_at' => now()
+                    'uploaded_at' => now(),
+                    'valid' => null,
+                    'catatan' => null
                 ]);
             
             // Get berkas yang baru diupdate untuk feedback
@@ -179,7 +181,7 @@ class BerkasController extends Controller
         $newBerkas->nama_file = $file->getClientOriginalName();
         $newBerkas->url = $path;
         $newBerkas->ukuran_kb = round($file->getSize() / 1024);
-        $newBerkas->valid = false;
+        $newBerkas->valid = null;
         $newBerkas->is_draft = true;  // PAKSA TRUE
         $newBerkas->uploaded_at = null;  // PASTIKAN NULL untuk draft
         
